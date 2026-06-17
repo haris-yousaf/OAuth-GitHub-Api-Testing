@@ -4,7 +4,7 @@ const axios = require('axios');
 const app = express();
 
 const CLIENT_ID = 'Ov23lix7vmFYeefFqRuE';
-const CLIENT_SECRET = '8d52e4cd96a6deb09cc5572c0c6fc42c5dc47eed';
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = 'http://localhost:3000/callback';
 
 // Step 1: Redirect user to GitHub authorization page
