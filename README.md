@@ -91,8 +91,6 @@ github-oauth-api-testing/
 │   ├── test-plan.md
 │   ├── test-cases.md
 │   └── bug-reports.md
-├── reports/
-│   └── newman-report.html
 └── README.md
 ```
 
@@ -127,6 +125,8 @@ newman run postman/github-oauth-collection.json \
 ## CI/CD
 
 All tokens are stored as GitHub Actions secrets and injected at runtime via `--env-var`. Nothing sensitive is committed to the repository.
+
+The HTML report is generated on every Actions run and available as a downloadable artifact under the Actions tab, not committed to the repo.
 
 **Secrets required:**
 
