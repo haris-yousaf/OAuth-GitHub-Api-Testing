@@ -1,5 +1,7 @@
 # GitHub OAuth API Testing
 
+[![GitHub OAuth API Tests](https://github.com/haris-yousaf/OAuth-GitHub-Api-Testing/actions/workflows/newman.yml/badge.svg)](https://github.com/haris-yousaf/OAuth-GitHub-Api-Testing/actions/workflows/newman.yml)
+
 Manual and automated API test suite for the [GitHub REST API](https://docs.github.com/en/rest) using OAuth 2.0 authorization code flow. Covers user profile, repository, and gist endpoints with a focus on authentication security, BOLA vulnerability testing, and token replay attack verification.
 
 ---
