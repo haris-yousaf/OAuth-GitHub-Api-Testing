@@ -1,0 +1,35 @@
+name: GitHub OAuth API Tests
+
+on: push
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Newman and HTMLextra reporter
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Run Newman tests
+        run: |
+          newman run postman/github-oauth-collection.json \
+            -e postman/github-oauth-environment.json \
+            --env-var "githubToken=${{ secrets.OAUTH_TOKEN_GITHUB }}" \
+            --env-var "githubTokenUser2=${{ secrets.OAUTH_TOKEN_USER2_GITHUB }}" \
+            --env-var "revokedToken=${{ secrets.REVOKED_TOKEN_GITHUB }}" \
+            --env-var "gistIdUser2=${{ secrets.GIST_ID_USER2_GITHUB }}" \
+            --reporters cli,htmlextra \
+            --reporter-htmlextra-export reports/newman-report.html
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: newman-report
+          path: reports/newman-report.html
