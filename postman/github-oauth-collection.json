@@ -1,0 +1,1067 @@
+{
+  "info": {
+    "_postman_id": "e5e9ccb4-0598-4652-9cc5-e7045c4b21ac",
+    "name": "GitHub OAuth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44470265",
+    "_collection_link": "https://go.postman.co/collection/44470265-e5e9ccb4-0598-4652-9cc5-e7045c4b21ac?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Authenticated User - Valid Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains 'login' field\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"login\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Login matches expected username\", function(){\r",
+                  "    pm.expect(response.login).to.eql(\"haris-yousaf\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains 'id' field\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"id\")\r",
+                  "    pm.expect(response.id).to.be.a(\"number\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains 'type' field\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"type\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Authenticated User - Invalid Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response message is 'Bad credentials'\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Bad credentials\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "invalidtoken123",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Authenticated User - No Auth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response message is 'Requires authentication'\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Requires authentication\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Profile",
+      "item": [
+        {
+          "name": "Public Profile by Username",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains 'login' field\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"login\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Login matches username 'haris-yousaf'\", function(){\r",
+                  "    pm.expect(response.login).to.eql(\"haris-yousaf\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains 'id' field\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"id\")\r",
+                  "    pm.expect(response.id).to.be.a(\"number\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains 'public_repos' field\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"public_repos\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains 'type' field\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"type\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/haris-yousaf",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "haris-yousaf"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Non-Existent User Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response message is 'Not Found'\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Not Found\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/this-user-does-not-exist-xyz-99999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "this-user-does-not-exist-xyz-99999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Repositories",
+      "item": [
+        {
+          "name": "Authenticated User Repos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is an array\", function(){\r",
+                  "    pm.expect(response).to.be.an(\"array\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Each repo has fields 'id', 'name', 'private', 'owner'\", function(){\r",
+                  "    response.forEach(function(repo){\r",
+                  "        pm.expect(repo).to.have.property(\"id\");\r",
+                  "        pm.expect(repo).to.have.property(\"name\");\r",
+                  "        pm.expect(repo).to.have.property(\"private\");\r",
+                  "        pm.expect(repo).to.have.property(\"owner\");\r",
+                  "    })\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/repos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "repos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Repos - No Auth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response message is 'Requires authentication'\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Requires authentication\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/repos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "repos"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gists",
+      "item": [
+        {
+          "name": "Gist - Valid Data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 201\", function(){\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "})\r",
+                  "\r",
+                  "pm.test(\"Response has 'id'\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has 'public'\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"public\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has 'files'\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"files\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has 'owner'\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"owner\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"gistId\", response.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"description\": \"SQA Portfolio - Test Gist\",\r\n  \"public\": false,\r\n  \"files\": {\r\n    \"test-file.txt\": {\r\n      \"content\": \"This gist was created by an automated API test.\"\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gist - Valid ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Gist description matches\", function(){\r",
+                  "    pm.expect(response.description).to.eql(\"SQA Portfolio - Test Gist\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Gist has 'test-file.txt'\", function(){\r",
+                  "    pm.expect(response.files).to.have.property(\"test-file.txt\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Owner is 'haris-yousaf'\", function(){\r",
+                  "    pm.expect(response.owner.login).to.eql(\"haris-yousaf\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gist - Valid Data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Gist description updated\", function(){\r",
+                  "    pm.expect(response.description).to.eql(\"SQA Portfolio - Updated Test Gist\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"'test-file.txt' content updated\", function(){\r",
+                  "    pm.expect(response.files['test-file.txt'].content).to.eql(\"This gist was updated by an automated API test.\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Owner is 'haris-yousaf'\", function(){\r",
+                  "    pm.expect(response.owner.login).to.eql(\"haris-yousaf\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"description\": \"SQA Portfolio - Updated Test Gist\",\r\n  \"files\": {\r\n    \"test-file.txt\": {\r\n      \"content\": \"This gist was updated by an automated API test.\"\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gist - After Update",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Updated Gist description persists\", function(){\r",
+                  "    pm.expect(response.description).to.eql(\"SQA Portfolio - Updated Test Gist\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gist - No Auth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response message is 'Requires authentication'\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Requires authentication\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"description\": \"SQA Portfolio - Test Gist\",\r\n  \"public\": false,\r\n  \"files\": {\r\n    \"test-file.txt\": {\r\n      \"content\": \"This gist was created by an automated API test.\"\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gist - No Auth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response message is 'Requires authentication'\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Requires authentication\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gist - Valid Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function(){\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response body is empty\", function(){\r",
+                  "    pm.expect(pm.response.text()).to.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Gist - After Deletion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response message is 'Not Found'\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Not Found\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "BOLA",
+      "item": [
+        {
+          "name": "Gist - Valid Data for BOLA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 201\", function(){\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "})\r",
+                  "\r",
+                  "pm.test(\"Response has 'id'\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has 'public'\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"public\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has 'files'\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"files\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has 'owner'\", function(){\r",
+                  "    pm.expect(response).to.have.property(\"owner\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"gistId\", response.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"description\": \"SQA Portfolio - Test Gist\",\r\n  \"public\": false,\r\n  \"files\": {\r\n    \"test-file.txt\": {\r\n      \"content\": \"This gist was created by an automated API test.\"\r\n    }\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gists",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Own Gist with Own Token (Baseline)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Gist description matches\", function(){\r",
+                  "    pm.expect(response.description).to.eql(\"SQA Portfolio - Test Gist\")\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Owner is 'haris-yousaf'\", function(){\r",
+                  "    pm.expect(response.owner.login).to.eql(\"haris-yousaf\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User2 Private Gist with User1 Token (BOLA Read)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 200 instead of 404 - BOLA confirmed, see BUG-001\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Gist is of another user - BOLA\", function () {\r",
+                  "    pm.expect(response.owner.login).to.eql(\"haris-yousaf-itz\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Gist is private - BOLA\", function () {\r",
+                  "    pm.expect(response.public).to.eql(false);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistIdUser2}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistIdUser2}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User2 Gist with User1 Token (BOLA Write)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 403 or 404\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([403, 404]);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Cross-user delete is rejected\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/gists/{{gistIdUser2}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gists",
+                "{{gistIdUser2}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Replay Attack",
+      "item": [
+        {
+          "name": "Authenticated User - Revoked Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Revoked token is rejected\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Bad credentials\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response does not contain user data\", function () {\r",
+                  "    pm.expect(response).to.not.have.property(\"login\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{revokedToken}}",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{githubToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "Accept",
+      "value": ""
+    },
+    {
+      "key": "X-GitHub-Api-Version",
+      "value": ""
+    }
+  ]
+}
